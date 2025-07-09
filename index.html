@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Landlord - Clan Application</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #000;
+      color: #0ff;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      cursor: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    form, h1, .confirmation, #cursor {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ... your existing CSS continues ... */
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0,255,255,0.05);
+      border: 1px solid #0ff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      background: transparent;
+      border: 2px solid #0ff;
+      color: #0ff;
+      padding: 0.5rem;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      resize: vertical;
+      outline: none;
+    }
+
+    option {
+      background: #000;
+      color: #0ff;
+    }
+
+    button {
+      background: transparent;
+      border: 2px solid #0ff;
+      color: #0ff;
+      padding: 0.75rem;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    button:hover {
+      background: #0ff;
+      color: #000;
+    }
+
+    .confirmation {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #0ff;
+    }
+
+    @keyframes neonPulse {
+      0%, 100% {
+        text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #00ffff;
+      }
+      50% {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #00ffff, 0 0 60px #00ffff;
+      }
+    }
+
+    #cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #0ff;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <h1>Clan Application</h1>
+  <form id="applicationForm">
+    <label for="name">Name / IGN:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required />
+
+    <label for="hours">Rust Hours:</label>
+    <input type="number" id="hours" name="hours" required />
+
+    <label for="steam">Steam Profile Link:</label>
+    <input type="url" id="steam" name="steam" required />
+
+    <label for="reason">Why do you want to join?</label>
+    <textarea id="reason" name="reason" rows="4" required></textarea>
+
+    <label for="role">Preferred Role:</label>
+    <select id="role" name="role" required>
+      <option value="">-- Select Role --</option>
+      <option value="farmer">Farmer</option>
+      <option value="pvp">PvP / Raider</option>
+      <option value="builder">Builder</option>
+      <option value="scout">Scout / Recon</option>
+    </select>
+
+    <button type="submit">Submit Application</button>
+  </form>
+
+  <div class="confirmation" id="confirmation"></div>
+
+  <div id="cursor"></div>
+
+  <!-- particles.js library -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    // Initialize particles.js
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": { "enable": true, "value_area": 800 }
+        },
+        "color": { "value": "#0ff" },
+        "shape": {
+          "type": "circle",
+          "stroke": { "width": 0, "color": "#000000" },
+          "polygon": { "nb_sides": 5 }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#0ff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 3,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" },
+          "resize": true
+        },
+        "modes": {
+          "grab": { "distance": 200, "line_linked": { "opacity": 1 } },
+          "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+          "repulse": { "distance": 200, "duration": 0.4 },
+          "push": { "particles_nb": 4 },
+          "remove": { "particles_nb": 2 }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Handle form submission
+    document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const hours = document.getElementById('hours').value;
+      const steam = document.getElementById('steam').value;
+      const reason = document.getElementById('reason').value;
+      const role = document.getElementById('role').value;
+
+      const payload = {
+        content: `**New Clan Application Received:**\n
+**Name:** ${name}
+**Age:** ${age}
+**Rust Hours:** ${hours}
+**Steam:** ${steam}
+**Reason:** ${reason}
+**Preferred Role:** ${role}`
+      };
+
+      try {
+        await fetch("https://discord.com/api/webhooks/1392619408328888330/j0wFnbshcRek4o5j2k7oIsw8zszHfLxwPAd9Be-_hoJlhiEhFMAch8sGCtVmKrXJUQgI", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+        document.getElementById('confirmation').innerHTML = "✅ Application sent successfully!";
+        this.reset();
+      } catch (err) {
+        console.error('Error sending webhook:', err);
+        document.getElementById('confirmation').innerHTML = "⚠️ There was an error sending your application.";
+      }
+    });
+  </script>
+</body>
+</html>
